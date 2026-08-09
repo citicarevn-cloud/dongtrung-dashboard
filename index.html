@@ -3,53 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hệ thống Đặt hàng & Quản lý Đông Trùng</title>
+    <title>Hệ thống Đặt hàng Đông Trùng</title>
     
     <!-- Open Graph Meta Tags dành cho Facebook -->
-    <meta property="og:title" content="Hệ thống Đặt hàng & Quản lý Đông Trùng">
+    <meta property="og:title" content="Hệ thống Đặt hàng Đông Trùng">
     <meta property="og:description" content="Truy cập hệ thống để đặt hàng và theo dõi thông tin sản phẩm đông trùng hạ thảo trực tuyến nhanh chóng.">
     <!-- THAY LINK ẢNH THUMBNAIL CỦA BẠN VÀO DÒNG BÊN DƯỚI -->
     <meta property="og:image" content="https://link-den-buc-anh-thumbnail-cua-ban.jpg">
     <meta property="og:type" content="website">
 
     <style>
-        /* CSS tối ưu cho màn hình di động */
-        body, html { margin: 0; padding: 0; height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; }
+        body, html { margin: 0; padding: 0; height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #e8f5e9; color: #2e7d32; }
         
-        /* Giao diện màn hình chờ (Loading Screen) với hiệu ứng spin */
-        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #f4fbf4; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10000; transition: opacity 0.5s ease; }
-        .spinner { border: 4px solid #d1ead1; border-top: 4px solid #2ecc71; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin-bottom: 15px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .loader-text { color: #27ae60; font-size: 16px; font-weight: 500; }
+        #fallback-message { display: none; text-align: center; padding: 20px; box-sizing: border-box; height: 100%; flex-direction: column; justify-content: flex-start; align-items: center; padding-top: 40px; }
         
-        /* Giao diện màn hình hướng dẫn và nút bấm */
-        #fallback-message { display: none; text-align: center; padding: 40px 20px; box-sizing: border-box; }
-        .container { background-color: white; padding: 40px 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); max-width: 400px; margin: auto; }
-        h2 { color: #1877f2; margin-top: 0; font-size: 20px; font-weight: 600; }
-        p { font-size: 16px; color: #4b4b4b; line-height: 1.6; margin-bottom: 25px; }
+        /* Hiệu ứng mũi tên chỉ lên góc phải */
+        .arrow-up { font-size: 50px; color: #2e7d32; align-self: flex-end; margin-right: 20px; margin-bottom: 20px; animation: bounceRight 1.5s infinite; transform: rotate(45deg); }
+        @keyframes bounceRight { 0%, 100% { transform: translate(0, 0) rotate(45deg); } 50% { transform: translate(15px, -15px) rotate(45deg); } }
         
-        /* CSS cho nút bấm lớn (button) */
-        .order-button { background-color: #1877f2; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-size: 18px; font-weight: 600; text-decoration: none; display: inline-block; box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3); transition: background-color 0.3s ease, transform 0.1s ease; cursor: pointer; }
-        .order-button:hover { background-color: #166fe5; }
-        .order-button:active { transform: scale(0.98); }
+        .container { background-color: #ffffff; padding: 40px 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(46, 125, 50, 0.1); max-width: 90%; width: 400px; text-align: center; }
+        .icon-dots { font-size: 28px; font-weight: bold; letter-spacing: 3px; color: #1b5e20; background: #c8e6c9; padding: 5px 20px; border-radius: 20px; display: inline-block; margin-bottom: 20px; }
+        
+        h2 { margin-top: 0; font-size: 22px; font-weight: 700; color: #1b5e20; }
+        p { font-size: 16px; line-height: 1.6; margin-bottom: 20px; color: #388e3c; }
+        .highlight { font-weight: 700; color: #1b5e20; background: #c8e6c9; padding: 4px 8px; border-radius: 6px; }
     </style>
 </head>
 <body>
 
-    <!-- Màn hình chờ trong lúc tải -->
-    <div id="loader">
-        <div class="spinner"></div>
-        <div class="loader-text">Đang chuẩn bị hệ thống Đông Trùng...</div>
-    </div>
-
-    <!-- Màn hình hướng dẫn và nút bấm (chỉ hiện trong Facebook) -->
     <div id="fallback-message">
+        <!-- Mũi tên chỉ về hướng dấu 3 chấm trên trình duyệt Facebook iOS -->
+        <div class="arrow-up">➚</div>
+        
         <div class="container">
-            <h2>Hệ thống Đặt hàng</h2>
-            <p>Trình duyệt của Facebook không hỗ trợ hiển thị hệ thống trực tiếp.</p>
-            <p>Vui lòng bấm vào nút bên dưới để tiếp tục đặt hàng trên trình duyệt ngoài.</p>
-            <!-- Nút bấm lớn sử dụng target="_blank" để mở cửa sổ mới -->
-            <a href="https://script.google.com/macros/s/AKfycbxZTwtQOMZcOAtQoulE3Q1VdxdikC-o4IBWrSyZ5k2ytUhWWEGyIgIisa3NGAzRbrE/exec" class="order-button" target="_blank">👉 BẤM ĐỂ ĐẶT HÀNG NGAY 👈</a>
+            <div class="icon-dots">...</div>
+            <h2>Gần xong rồi!</h2>
+            <p>Để hệ thống quản lý đơn hàng hoạt động mượt mà, Facebook yêu cầu mở bằng trình duyệt của máy.</p>
+            <p>Bạn vui lòng bấm vào biểu tượng <span class="highlight">3 chấm (...)</span> ở góc trên cùng bên phải màn hình và chọn:</p>
+            <p><span class="highlight">"Mở trong Safari"</span> hoặc <span class="highlight">"Mở bằng trình duyệt ngoài"</span>.</p>
         </div>
     </div>
 
@@ -58,22 +49,14 @@
         var ua = navigator.userAgent || navigator.vendor || window.opera;
         var isFacebookApp = (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1);
         var gasUrl = "https://script.google.com/macros/s/AKfycbxZTwtQOMZcOAtQoulE3Q1VdxdikC-o4IBWrSyZ5k2ytUhWWEGyIgIisa3NGAzRbrE/exec";
-        var loader = document.getElementById('loader');
-        var fallbackMessage = document.getElementById('fallback-message');
-
-        // Tải trang xong: Ẩn loader
-        window.onload = function() {
-            loader.style.opacity = '0';
-            setTimeout(function() { loader.style.display = 'none'; }, 500);
-
-            if (!isFacebookApp) {
-                // Nếu KHÔNG phải Facebook App, tự động chuyển hướng ngay lập tức như cũ
-                window.location.replace(gasUrl);
-            } else {
-                // Nếu LÀ Facebook App, hiển thị nút bấm hướng dẫn
-                fallbackMessage.style.display = 'block';
-            }
-        };
+        
+        if (!isFacebookApp) {
+            // Nếu dùng trình duyệt thường hoặc Zalo, Telegram -> Vẫn tự động chuyển hướng trơn tru
+            window.location.replace(gasUrl);
+        } else {
+            // Nếu dùng Facebook -> Hiện thông báo màu xanh thẩm mỹ yêu cầu thao tác thủ công
+            document.getElementById('fallback-message').style.display = 'flex';
+        }
     </script>
 
 </body>
