@@ -8,17 +8,60 @@
     <!-- Open Graph Meta Tags dành cho Facebook -->
     <meta property="og:title" content="Hệ thống Đặt hàng & Quản lý Đông Trùng">
     <meta property="og:description" content="Truy cập hệ thống để đặt hàng và theo dõi thông tin sản phẩm đông trùng hạ thảo trực tuyến nhanh chóng.">
-    <!-- THAY LINK ẢNH CỦA BẠN VÀO DÒNG BÊN DƯỚI -->
+    <!-- Đừng quên thay link ảnh thật của bạn ở dưới -->
     <meta property="og:image" content="https://link-den-buc-anh-thumbnail-cua-ban.jpg">
     <meta property="og:type" content="website">
 
-    <!-- Lệnh chuyển hướng người dùng sang Google Apps Script -->
-    <meta http-equiv="refresh" content="0; url=https://script.google.com/macros/s/AKfycbxZTwtQOMZcOAtQoulE3Q1VdxdikC-o4IBWrSyZ5k2ytUhWWEGyIgIisa3NGAzRbrE/exec">
     <script>
-        window.location.replace("https://script.google.com/macros/s/AKfycbxZTwtQOMZcOAtQoulE3Q1VdxdikC-o4IBWrSyZ5k2ytUhWWEGyIgIisa3NGAzRbrE/exec");
+        // Kiểm tra xem người dùng có đang mở bằng trình duyệt nội bộ của Facebook không
+        var ua = navigator.userAgent || navigator.vendor || window.opera;
+        var isFacebookApp = (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1);
+        var gasUrl = "https://script.google.com/macros/s/AKfycbxZTwtQOMZcOAtQoulE3Q1VdxdikC-o4IBWrSyZ5k2ytUhWWEGyIgIisa3NGAzRbrE/exec";
+
+        if (!isFacebookApp) {
+            // Nếu KHÔNG phải Facebook App, tự động chuyển hướng ngay lập tức
+            window.location.replace(gasUrl);
+        }
     </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 400px;
+        }
+        h2 { color: #1877f2; }
+        p { font-size: 16px; color: #333; line-height: 1.5; }
+        .highlight { font-weight: bold; color: #e74c3c; }
+    </style>
 </head>
 <body>
-    <p>Đang chuyển hướng đến hệ thống... <a href="https://script.google.com/macros/s/AKfycbxZTwtQOMZcOAtQoulE3Q1VdxdikC-o4IBWrSyZ5k2ytUhWWEGyIgIisa3NGAzRbrE/exec">Bấm vào đây nếu trình duyệt không tự động chuyển.</a></p>
+    <div id="fallback-message" style="display: none;">
+        <div class="container">
+            <h2>⚠️ Chú ý</h2>
+            <p>Trình duyệt của Facebook không hỗ trợ hiển thị hệ thống này.</p>
+            <p>Vui lòng bấm vào <b>biểu tượng 3 chấm (...)</b> ở góc trên cùng bên phải màn hình (như hình minh họa) và chọn <span class="highlight">"Mở bằng trình duyệt ngoài"</span> hoặc <span class="highlight">"Mở trong Safari/Chrome"</span> để tiếp tục đặt hàng.</p>
+        </div>
+    </div>
+
+    <script>
+        // Chỉ hiển thị thông báo hướng dẫn nếu đang ở trong Facebook App
+        if (isFacebookApp) {
+            document.getElementById("fallback-message").style.display = "block";
+        }
+    </script>
 </body>
 </html>
